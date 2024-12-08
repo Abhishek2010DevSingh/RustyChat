@@ -1,3 +1,4 @@
+use crate::component::prelude::*;
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
 
@@ -26,5 +27,8 @@ pub fn App() -> impl IntoView {
     view! {
         <Stylesheet id="leptos" href="/pkg/rusty-chat.css" />
         <Title text="Welcome to Leptos" />
+
+        <ChatsView />
+        <ChatInput />
     }
 }

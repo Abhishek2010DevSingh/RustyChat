@@ -26,7 +26,6 @@ pub fn App() -> impl IntoView {
 
     view! {
         <Stylesheet id="leptos" href="/pkg/rusty-chat.css" />
-
         <Title text="Welcome to Leptos" />
     }
 }

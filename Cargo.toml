@@ -9,24 +9,32 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 leptos = { version = "0.7.0" }
 leptos_router = { version = "0.7.0" }
-axum = { version = "0.7", optional = true }
+axum = { version = "0.7", features = ["ws"], optional = true }
 console_error_panic_hook = "0.1"
 leptos_axum = { version = "0.7.0", optional = true }
 leptos_meta = { version = "0.7.0" }
 tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
 tower = { version = "0.4", optional = true }
-tower-http = { version = "0.5", features = ["fs"], optional = true }
-wasm-bindgen = "=0.2.95"
+tower-http = { version = "0.5", features = ["fs", "trace"], optional = true }
+wasm-bindgen = "=0.2.96"
 thiserror = "1"
 tracing = { version = "0.1", optional = true }
+tracing-subscriber = { version = "0.3.19", optional = true }
 http = "1"
 serde = { version = "1.0.215", features = ["derive"] }
+kalosm = { version = "0.3.2", features = ["language"], optional = true }
+anyhow = { version = "1.0.94", optional = true}
+serde_json = "1.0.133"
+futures = "0.3.31"
 
 [features]
 hydrate = ["leptos/hydrate"]
 ssr = [
+    "dep:kalosm",
+    "dep:tracing-subscriber",
     "dep:axum",
     "dep:tokio",
+    "dep:anyhow",
     "dep:tower",
     "dep:tower-http",
     "dep:leptos_axum",

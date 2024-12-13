@@ -2,6 +2,7 @@
 name = "rusty-chat"
 version = "0.1.0"
 edition = "2021"
+readme = "README.md"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -31,7 +32,7 @@ pulldown-cmark = "0.12.2"
 [features]
 hydrate = ["leptos/hydrate"]
 ssr = [
-"dep:ollama-rs",
+    "dep:ollama-rs",
     "dep:tracing-subscriber",
     "dep:axum",
     "dep:tokio",

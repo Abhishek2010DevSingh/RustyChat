@@ -30,21 +30,23 @@ pub fn ChatsView() -> impl IntoView {
                 html::push_html(&mut html_output, parser);
 
                 if message.user {
-                    // User message styling
+                    // User message styling with dynamic width based on text
                     view! {
                         <div class="flex justify-end mb-2">
                             <div
-                                class="bg-blue-500 text-white rounded-lg px-4 py-2 max-w-xs shadow-md"
+                                class="bg-blue-500 text-white rounded-lg px-4 py-2 max-w-full shadow-md"
+                                style="max-width: calc(100% - 2rem);"
                                 inner_html=html_output
                             ></div>
                         </div>
                     }
                 } else {
-                    // AI response styling
+                    // AI response styling with dynamic width based on text
                     view! {
                         <div class="flex justify-start mb-2">
                             <div
-                                class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2 max-w-xs shadow-md"
+                                class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2 max-w-full shadow-md"
+                                style="max-width: calc(100% - 2rem);"
                                 inner_html=html_output
                             ></div>
                         </div>

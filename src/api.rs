@@ -1,7 +1,7 @@
 use leptos::prelude::*;
 use server_fn::codec::{StreamingText, TextStream};
 
-#[server(output = StreamingText)]
+#[server( output = StreamingText)]
 pub async fn streaming_response(prompt: String) -> Result<TextStream, ServerFnError> {
     use crate::state::AppState;
     use axum::Extension;

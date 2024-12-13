@@ -1,29 +1,40 @@
 use leptos::prelude::*;
-use server_fn::codec::{StreamingText, TextStream as LeptosTextStream};
+use server_fn::codec::{StreamingText, TextStream};
 
 #[server(output = StreamingText)]
-pub async fn streaming_response(prompt: String) -> Result<LeptosTextStream, ServerFnError> {
-    use axum::extract::Extension;
-    use kalosm::language::*;
+pub async fn streaming_response(prompt: String) -> Result<TextStream, ServerFnError> {
+    use crate::state::AppState;
+    use axum::Extension;
+    use futures::StreamExt;
     use leptos_axum::extract;
-    use std::sync::Arc;
+    use ollama_rs::generation::chat::{request::ChatMessageRequest, ChatMessage};
 
-    let Extension(model) = extract::<Extension<Arc<Llama>>>().await?;
+    let Extension(mut state) = extract::<Extension<AppState>>().await?;
+    state.history.push(ChatMessage::user(prompt));
 
-    let markers = model.chat_markers().unwrap();
-    let message = markers.system_prompt_marker.to_string()
-        + "You are a helpful assistant who responds to user input with concise, helpful answers."
-        + markers.end_system_prompt_marker
-        + markers.user_marker
-        + &prompt
-        + markers.end_user_marker
-        + markers.assistant_marker;
-
-    let stream = model
-        .stream_text(&message)
-        .with_stop_on(markers.end_system_prompt_marker.to_string())
+    let mut stream_response = state
+        .ollama
+        .send_chat_messages_stream(ChatMessageRequest::new(
+            "llama3.2:1b".into(),
+            state.history.clone(),
+        ))
         .await
-        .unwrap();
+        .map_err(ServerFnError::new)?;
 
-    Ok(LeptosTextStream::new(stream.map(Ok)))
+    let (tx, rx) = futures::channel::mpsc::unbounded();
+    tokio::spawn(async move {
+        let mut response = String::new();
+        while let Some(Ok(result)) = stream_response.next().await {
+            if let Some(assistant_message) = result.message {
+                response.push_str(&assistant_message.content);
+                if let Err(err) = tx.unbounded_send(Ok(assistant_message.content)) {
+                    tracing::error!("Failed to send message: {}", err);
+                    break;
+                }
+            }
+        }
+        state.history.push(ChatMessage::assistant(response));
+    });
+
+    Ok(TextStream::new(rx))
 }

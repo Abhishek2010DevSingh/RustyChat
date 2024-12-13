@@ -10,3 +10,8 @@ pub struct Message {
     pub user: bool,
     pub text: String,
 }
+
+#[derive(Serialize, Deserialize, Clone, Default)]
+pub struct ChatRequest {
+    pub prompt: String,
+}

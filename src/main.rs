@@ -1,14 +1,10 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
-    use std::sync::Arc;
-
-    use anyhow::Context;
     use axum::{routing::get, Extension, Router};
-    use kalosm::language::{Llama, LlamaSource};
     use leptos::prelude::*;
     use leptos_axum::{generate_route_list, LeptosRoutes};
-    use rusty_chat::app::*;
+    use rusty_chat::{app::*, state::AppState};
     use tower_http::trace::TraceLayer;
     use tracing::Level;
 
@@ -21,21 +17,13 @@ async fn main() -> Result<(), anyhow::Error> {
         .with_max_level(Level::DEBUG)
         .init();
 
-    tracing::debug!("Downloading model...");
-    let model = Llama::builder()
-        .with_source(LlamaSource::llama_3_2_1b_chat())
-        .build()
-        .await
-        .context("Failed to load the model.")?;
-    tracing::debug!("Model downloading completed");
-
     let app = Router::new()
         .leptos_routes(&leptos_options, routes, {
             let leptos_options = leptos_options.clone();
             move || shell(leptos_options.clone())
         })
         .layer(TraceLayer::new_for_http())
-        .layer(Extension(Arc::new(model)))
+        .layer(Extension(AppState::default()))
         .fallback(leptos_axum::file_and_error_handler(shell))
         .with_state(leptos_options);
 

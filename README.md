@@ -9,7 +9,7 @@ Welcome to **Rusty Chat**, a full-stack web application built using the **Leptos
 
 ## Features
 
-- **Real-time Chat**: 💬 Leverage WebSockets to enable seamless real-time chat functionality.
+- **Real-time Chat**: 💬 Leverage Http Stream to enable seamless real-time chat functionality.
 - **AI-Powered Chat**: 🤖 Integrate Ollama to run local AI models for enhanced chat responses.
 - **Full-Stack Development**: 🌐 Leptos is used for both the frontend and backend, with Axum as the backend server.
 - **Async Framework**: ⚡ Tokio is used for handling asynchronous tasks efficiently.

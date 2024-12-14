@@ -20,7 +20,7 @@ Welcome to **Rusty Chat**, a full-stack web application built using the **Leptos
 
 🎥 **Demo Video**  
 You can watch the demo of Rusty Chat here:  
-[Add Demo Video Link]
+[https://github.com/Abhishek2010DevSingh/RustyChat/blob/main/demo.mp4]
 
 ## Project Setup
 

@@ -1,12 +1,12 @@
 use crate::model::Conversation;
+use comrak::{markdown_to_html, Options};
 use leptos::html::Div;
 use leptos::prelude::*;
-use pulldown_cmark::{html, Options, Parser};
 
 #[component]
 pub fn ChatsView() -> impl IntoView {
     let conversation =
-        use_context::<RwSignal<Conversation>>().expect("`Conversation` as global state not found.");
+        use_context::<RwSignal<Conversation>>().expect("Conversation as global state not found.");
 
     let div_node_ref: NodeRef<Div> = NodeRef::new();
     Effect::new(move |_| {
@@ -23,11 +23,8 @@ pub fn ChatsView() -> impl IntoView {
             .iter()
             .map(move |message| {
                 let markdown_input = &message.text;
-                let mut options = Options::empty();
-                options.insert(Options::ENABLE_STRIKETHROUGH);
-                let parser = Parser::new_ext(markdown_input, options);
-                let mut html_output = String::new();
-                html::push_html(&mut html_output, parser);
+                let options = Options::default(); 
+                let html_output = markdown_to_html(markdown_input, &options);
 
                 if message.user {
                     // User message styling with dynamic width based on text

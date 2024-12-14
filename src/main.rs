@@ -1,7 +1,7 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
-    use axum::{routing::get, Extension, Router};
+    use axum::{Extension, Router};
     use leptos::prelude::*;
     use leptos_axum::{generate_route_list, LeptosRoutes};
     use rusty_chat::{app::*, state::AppState};

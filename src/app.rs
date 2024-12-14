@@ -26,24 +26,11 @@ pub fn App() -> impl IntoView {
     provide_context(RwSignal::new(Conversation::default()));
     view! {
         <Stylesheet id="leptos" href="/pkg/rusty-chat.css" />
-        <Title text="Welcome to Leptos" />
+        <Title text="RustyChat" />
 
         <div class="flex flex-col h-screen">
             <ChatsView />
             <ChatInput />
-        </div>
-    }
-}
-
-#[component]
-pub fn ErrorDisplay(error: String) -> impl IntoView {
-    view! {
-        <div class="relative p-6 mb-4 bg-gradient-to-br from-red-400 to-red-600 text-white rounded-lg shadow-lg">
-            <div class="absolute inset-0 bg-gradient-to-br from-red-700 to-red-500 opacity-30 rounded-lg"></div>
-            <div class="relative z-10">
-                <strong class="font-bold text-lg">{"Error: "}</strong>
-                <p class="mt-2">{error}</p>
-            </div>
         </div>
     }
 }

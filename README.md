@@ -22,7 +22,7 @@ Welcome to **Rusty Chat**, a full-stack web application built using the **Leptos
 You can watch the demo of Rusty Chat here:  
 [https://github.com/Abhishek2010DevSingh/RustyChat/blob/main/demo.mp4]
 <video controls width="720" height="480">
-    <source src="https://raw.githubusercontent.com/Abhishek2010DevSingh/RustyChat/main/demo.mp4" type="video/mp4">
+    <source src="https://github.com/Abhishek2010DevSingh/RustyChat/main/demo.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 

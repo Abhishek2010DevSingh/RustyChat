@@ -175,7 +175,6 @@ If you encounter any issues or need help, feel free to open an issue on the [Git
 
 Rusty Chat is a full-stack, real-time web chat app built with cutting-edge technologies in Rust. With features like local AI integration, real-time messaging, and full-stack development using Leptos and Axum, it provides a modern and efficient platform for building chat applications.
 
-We hope this template helps you get started with your next full-stack web project!
 
 Happy coding! 🎉
 
